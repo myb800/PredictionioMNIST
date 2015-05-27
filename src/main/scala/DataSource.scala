@@ -31,8 +31,15 @@ class DataSource(val dsp: DataSourceParams)
   def readTraining(sc: SparkContext): TrainingData = {
     val imageFile = Files.readAllBytes(Paths.get("/tmp/train-images-idx3-ubyte")).slice(16,16 + 28 * 28 * 60000)
     val labelFile = Files.readAllBytes(Paths.get("/tmp/train-labels-idx1-ubyte")).slice(8,60008)
-    val imageRDD = sc.parallelize(imageFile.toSeq,5).zipWithIndex.map{ case (p,i) => (i / (28 * 28),p.toDouble)}
-                                                  .groupByKey.map{ case (i,p) => p.toArray}.cache
+    val imageRDD = sc.parallelize(imageFile.toSeq,5).zipWithIndex.map{ 
+      case (p,i) => {
+          if(p < 0){
+            (i / (28 * 28),256 + p.toDouble)
+          } else {
+            (i / (28 * 28),p.toDouble)
+          }
+        
+        }}.groupByKey.map{ case (i,p) => p.toArray}.cache
     val labelRDD = sc.parallelize(labelFile.toSeq,5)
 
     new TrainingData(imageRDD.zip(labelRDD).map{ case (i,l) => Image(i,l.toDouble)})
