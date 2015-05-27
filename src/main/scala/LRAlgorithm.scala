@@ -41,7 +41,7 @@ class RFAlgorithm(val ap: LRAlgorithmParams)
   def predict(model: LRModel, query: Query): PredictedResult = {
     // Convert String ID to Int index for Mllib
     val image = query.image.split(",").map{ p => p.trim.toDouble }
-    new PredictedResult(model.lr.predict(Vectors.dense(image)))
+    new PredictedResult(model.lr.predict(Vectors.dense(image)).toInt)
   }
 
 }
