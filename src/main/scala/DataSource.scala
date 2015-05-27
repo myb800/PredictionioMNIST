@@ -35,7 +35,7 @@ class DataSource(val dsp: DataSourceParams)
     var labels = Seq[Double]()
     var a = 0
     var b = 0
-    for(a <- 0 until 60000){
+    for(a <- 0 until 10000){
       if(a % 1000 == 0){
         logger.info("a " + a)
       }
