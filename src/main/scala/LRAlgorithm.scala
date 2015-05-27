@@ -30,10 +30,11 @@ class LRAlgorithm(val ap: LRAlgorithmParams)
       " Please check if DataSource generates TrainingData" +
       " and Preprator generates PreparedData correctly.")
     // Convert user and item String IDs to Int index for MLlib
+    val solver = new LogisticRegressionWithLBFGS()
+    solver.setNumClasses(10)
+    solver.optimizer.setRegParam(10)
     LRModel(
-      new LogisticRegressionWithLBFGS()
-            .setNumClasses(10)
-            .run(data.images.map{ i => LabeledPoint(i.label,Vectors.dense(i.image)) })
+      solver.run(data.images.map{ i => LabeledPoint(i.label,Vectors.dense(i.image)) })
     )
     
   }
