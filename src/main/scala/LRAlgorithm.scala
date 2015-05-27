@@ -10,7 +10,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
 import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.classification.LogisticRegressionWithSGD
+import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
 import org.apache.spark.mllib.classification.LogisticRegressionModel
 import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import grizzled.slf4j.Logger
@@ -31,7 +31,9 @@ class LRAlgorithm(val ap: LRAlgorithmParams)
       " and Preprator generates PreparedData correctly.")
     // Convert user and item String IDs to Int index for MLlib
     LRModel(
-      LogisticRegressionWithSGD.train(data.images.map{ i => LabeledPoint(i.label,Vectors.dense(i.image)) },100)
+      new LogisticRegressionWithLBFGS()
+            .setNumClasses(10)
+            .run(data.images.map{ i => LabeledPoint(i.label,Vectors.dense(i.image)) })
     )
     
   }
