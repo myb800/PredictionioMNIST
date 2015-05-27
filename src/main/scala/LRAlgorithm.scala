@@ -18,7 +18,7 @@ import grizzled.slf4j.Logger
 
 case class LRAlgorithmParams extends Params
 
-class RFAlgorithm(val ap: LRAlgorithmParams)
+class LRAlgorithm(val ap: LRAlgorithmParams)
   extends PAlgorithm[PreparedData, LRModel, Query, PredictedResult] {
 
   @transient lazy val logger = Logger[this.type]
