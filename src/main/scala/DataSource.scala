@@ -36,6 +36,9 @@ class DataSource(val dsp: DataSourceParams)
     var a = 0
     var b = 0
     for(a <- 0 until 60000){
+      if(a % 1000 == 0){
+        logger.info("a " + a)
+      }
       var image = Array[Double]()
       for(b <- 0 until 28 * 28){
         image = image :+ imageFile(a * 28 * 28 + b + 16).toDouble
