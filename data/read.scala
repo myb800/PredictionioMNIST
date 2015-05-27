@@ -6,13 +6,15 @@ def fromByteArray(b: Array[Byte],i: Int): Int = {
 	a
 }
 val byteArray = Files.readAllBytes(Paths.get("train-images-idx3-ubyte")) 
-var images = Seq[Array[Byte]]()
+var images = Seq[Array[Double]]()
 var a = 0
 var b = 0
-for(a <- 0 until 60000){
-	var image = Array[Byte]();
-	for(b <- 0 until 28){
-		image = image :+ byteArray(a*28*28 + b + 16);
+for(a <- 0 until 1){
+	var image = Array[Double]();
+	for(b <- 0 until 28 * 28){
+		image = image :+ byteArray(a*28*28 + b + 16).toDouble;
 	}
 	images = images :+ image;
+	image.foreach(p => println(p))
+	println(image.size)
 }

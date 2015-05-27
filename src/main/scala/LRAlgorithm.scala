@@ -32,7 +32,6 @@ class LRAlgorithm(val ap: LRAlgorithmParams)
     // Convert user and item String IDs to Int index for MLlib
     val solver = new LogisticRegressionWithLBFGS()
     solver.setNumClasses(10)
-    solver.optimizer.setRegParam(0.01)
     LRModel(
       solver.run(data.images.map{ i => LabeledPoint(i.label,Vectors.dense(i.image)) })
     )
