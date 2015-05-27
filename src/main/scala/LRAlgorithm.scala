@@ -16,9 +16,7 @@ import org.apache.spark.mllib.linalg.{Vector, Vectors}
 import grizzled.slf4j.Logger
 
 
-case class LRAlgorithmParams(
-  numTrees: Int,
-  depth: Double) extends Params
+case class LRAlgorithmParams extends Params
 
 class RFAlgorithm(val ap: LRAlgorithmParams)
   extends PAlgorithm[PreparedData, LRModel, Query, PredictedResult] {
