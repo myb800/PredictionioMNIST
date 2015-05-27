@@ -34,6 +34,7 @@ class DataSource(val dsp: DataSourceParams)
     val imageRDD = sc.parallelize(imageFile.toSeq).zipWithIndex.map{ case (p,i) => (i / (28 * 28),p.toDouble)}
                                                   .groupByKey.map{ case (i,p) => p.toArray}.cache
     val labelRDD = sc.parallelize(labelFile.toSeq)
+    println(imageRDD.count + " " + labelRDD.count)
     new TrainingData(imageRDD.zip(labelRDD).map{ case (i,l) => Image(i,l.toDouble)})
   }
 
